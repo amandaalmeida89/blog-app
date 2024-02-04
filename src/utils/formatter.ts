@@ -2,7 +2,7 @@ export const parsedNumber = (number: number, targetLength: number, padString: st
   return number.toString().padStart(targetLength, padString);
 };
 
-export const formattedDate = (date: string) => {
+export const parsedData = (date: string) => {
   const newDate = new Date(date)
   const day = newDate.getDate()
   const month = newDate.getMonth()
@@ -18,3 +18,9 @@ export const formattedDate = (date: string) => {
     year
   }
 };
+
+export const formattedDate = (date: string) => {
+  const formatted = parsedData(date)
+  const { day, month, year } = formatted || {}
+  return `${month}.${day}.${year}`
+}
