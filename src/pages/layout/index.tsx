@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import { ContextProvider } from '../../services/ContextProvider';
 import { texts } from '../../texts';
 
-export const Layout = ({ children }: PropsWithChildren) => {
+export default function Layout ({ children }: PropsWithChildren) {
   return (
     <ContextProvider>
       <Stack padding={4} sx={{minHeight: '100vh'}}>
@@ -14,4 +14,4 @@ export const Layout = ({ children }: PropsWithChildren) => {
       </Stack>
     </ContextProvider>
   );
-};
+}
