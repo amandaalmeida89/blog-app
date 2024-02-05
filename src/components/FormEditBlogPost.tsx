@@ -6,8 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { PostResponse } from '../types/Post'
-import { texts } from '../texts'
+import { PostResponse } from '../types/Post';
+import { texts } from '../texts';
 
 type Props = {
   isEdit: boolean,
@@ -18,8 +18,8 @@ type Props = {
 }
 
 export const FormEditBlogPost: FC<Props> =({ isEdit, open, post, handleAction, handleChange }) => {
-  const { title, content } = post || {}
-  const titleLabel = isEdit ? texts.editTitle : texts.createTitle
+  const { title, content } = post || {};
+  const titleLabel = isEdit ? texts.editTitle : texts.createTitle;
 
   return (
     <Dialog

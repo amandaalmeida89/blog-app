@@ -7,13 +7,16 @@
   "extends": [
     "eslint:recommended",
     "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
     "next/core-web-vitals"
   ],
   "ignorePatterns": [
     "dist",
     ".eslintrc.json"
   ],
+  "parser": "@typescript-eslint/parser",
   "rules": {
+    "@typescript-eslint/no-explicit-any": "off",
     "semi": [
       "error",
       "always"

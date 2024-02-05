@@ -1,46 +1,46 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router'
-import { useSearchParams } from 'next/navigation'
-import { useBlogContext } from '../../services/ContextProvider'
-import { PostResponse } from '../../types/Post'
-import { formattedDate } from '../../utils/formatter'
+import { useEffect, useState, useCallback } from 'react';
+import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
+import { useBlogContext } from '../../services/ContextProvider';
+import { PostResponse } from '../../types/Post';
+import { formattedDate } from '../../utils/formatter';
 import Stack from '@mui/material/Stack';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { FormBlogPost } from '../../components/FormBlogPost'
-import { FabBlogPost } from '../../components/FabBlogPost'
+import { FormBlogPost } from '../../components/FormBlogPost';
+import { FabBlogPost } from '../../components/FabBlogPost';
 
 export default function BlogDetail() {
-  const [post, setPost] = useState<PostResponse>()
-  const [updatePost, setUpdatePost] = useState({})
+  const [post, setPost] = useState<PostResponse>();
+  const [updatePost, setUpdatePost] = useState({});
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState('');
   const { deleteBlog, getBlog, updateBlog } = useBlogContext();
-  const { imgUrl, title, content, createdAt } = post || {}
-  const pathname = useSearchParams()
+  const { imgUrl, title, content, createdAt } = post || {};
+  const pathname = useSearchParams();
   const router = useRouter();
-  const index = pathname.get('index') || ''
-  const blogIndex = parseInt(index)
+  const index = pathname.get('index') || '';
+  const blogIndex = parseInt(index);
 
-  const imageDefault = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnqgRAb49-QsVJpeNhEzlwDb5nxh7u8M9t-Q&usqp=CAU'
-  const image = imgUrl ? imgUrl : imageDefault
+  const imageDefault = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnqgRAb49-QsVJpeNhEzlwDb5nxh7u8M9t-Q&usqp=CAU';
+  const image = imgUrl ? imgUrl : imageDefault;
 
-  const getBlogInfo = () => {
-    const post = getBlog(blogIndex)
-    setPost(post)
-  }
+  const getBlogInfo = useCallback(() => {
+    const post = getBlog(blogIndex);
+    setPost(post);
+  }, [blogIndex, getBlog]);
 
   const handleAction = (action?: string) => {
     if (action === 'delete') {
-      deleteBlog(blogIndex)
-      return router.push({ pathname: '/list' })
+      deleteBlog(blogIndex);
+      return router.push({ pathname: '/list' });
     }
 
-    if (action === 'save') {
-      const edited = { ...post, ...updatePost }
-      updateBlog(blogIndex, edited)
-      getBlogInfo()
+    if (action === 'save' && post) {
+      const edited = { ...post, ...updatePost };
+      updateBlog(blogIndex, edited);
+      getBlogInfo();
     }
 
     setOpen(false);
@@ -48,16 +48,16 @@ export default function BlogDetail() {
 
   const handleOpen = (action: string) => {
     setOpen(true);
-    setAction(action)
-  }
+    setAction(action);
+  };
 
   const handleChange = (key: string, value: string) => {
-    setUpdatePost({ ...updatePost, [key]: value })
-  }
+    setUpdatePost({ ...updatePost, [key]: value });
+  };
 
   useEffect(() => {
-    getBlogInfo()
-  },[router.isReady]);
+    getBlogInfo();
+  },[router.isReady, getBlogInfo]);
 
   return (
     <Container>
@@ -75,4 +75,4 @@ export default function BlogDetail() {
       <FabBlogPost handleOpen={handleOpen}></FabBlogPost>
     </Container>
   );
-};
+}

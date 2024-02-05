@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import Stack from '@mui/material/Stack';
 import Modal from '@mui/material/Modal';
-import { FormDeleteBlogPost } from './FormDeleteBlogPost'
-import { FormEditBlogPost } from './FormEditBlogPost'
-import { PostResponse } from '../types/Post'
+import { FormDeleteBlogPost } from './FormDeleteBlogPost';
+import { FormEditBlogPost } from './FormEditBlogPost';
+import { PostResponse } from '../types/Post';
 
 type Props = {
   action: string,
@@ -14,7 +14,7 @@ type Props = {
 }
 
 export const FormBlogPost: FC<Props> = ({ post, action, open, handleAction, handleChange }) => {
-  const isDelete = action === 'delete'
+  const isDelete = action === 'delete';
 
   return (
     <Stack>
