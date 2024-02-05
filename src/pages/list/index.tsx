@@ -47,7 +47,7 @@ export default function BlogList() {
               {media(imgUrl || '')}
               <CardContent>
                 <Typography gutterBottom fontWeight='500' textAlign='center'>{formattedDate(createdAt)}</Typography>
-                <Typography textAlign='center' color='#00695c' variant='h6'>{title}</Typography>
+                <Typography textAlign='center' color='primary.dark' variant='h6'>{title}</Typography>
                 <Typography textOverflow='ellipsis' whiteSpace='nowrap' overflow='hidden' color="text.secondary">
                   {content}
                 </Typography>

@@ -1,8 +1,17 @@
 import { PostResponse } from '../types/Post'
 
-export const BlogService = (blogList: PostResponse[]) => {
+export const BlogService = (blogList: PostResponse[], setBlogList = (_: any) => {}) => {
   const offset = 8;
   const pagination = Math.ceil(blogList?.length/ offset);
+
+  const deleteBlog = (blogIndex: number) => {
+    const newList = blogList?.filter((_, index) => index !== blogIndex)
+    setBlogList(newList)
+  }
+
+  const getBlog = (blogIndex: number) => {
+    return blogList[blogIndex]
+  }
 
   const getList = (page: number) => {
     let count = (page * offset) - offset
@@ -15,9 +24,10 @@ export const BlogService = (blogList: PostResponse[]) => {
     return blogList
   }
 
-  const getBlog = (index: number) => {
-    return blogList[index]
+  const updateBlog = (blogIndex: number, post: PostResponse) => {
+    blogList[blogIndex] = post
+    setBlogList([...blogList])
   }
 
-  return { getList, getBlog, pagination }
+  return { deleteBlog, getBlog, getList, updateBlog, pagination }
 }
