@@ -3,14 +3,20 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { ContextProvider } from '../../services/ContextProvider';
 import { texts } from '../../texts';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 export default function Layout ({ children }: PropsWithChildren) {
   return (
     <ContextProvider>
-      <Stack padding={4} sx={{minHeight: '100vh'}}>
-        <Typography sx={{typography: { xs: 'h4', md: 'h4', lg: 'h2' }}} textAlign='center' color='primary.dark'>{texts.title}</Typography>
-        <Typography sx={{typography: { xs: 'h6', md: 'h5', lg: 'h5' }}} textAlign='center' color='primary.dark'>{texts.description}</Typography>
-        {children}
+      <Header></Header>
+      <Stack justifyContent={'space-between'} sx={{minHeight: '100vh'}}>
+        <Stack padding={4}>
+          <Typography sx={{typography: { xs: 'h4', md: 'h4', lg: 'h2' }}} textAlign='center' color='primary.dark'>{texts.title}</Typography>
+          <Typography sx={{typography: { xs: 'h6', md: 'h5', lg: 'h5' }}} textAlign='center' color='primary.dark'>{texts.description}</Typography>
+          {children}
+        </Stack>
+        <Footer></Footer>
       </Stack>
     </ContextProvider>
   );
