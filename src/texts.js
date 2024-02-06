@@ -10,4 +10,6 @@ export const texts = {
   createTitle: 'Create Post',
   editTitle: 'Edit Post',
   editDescription: 'Please ensure to click on the "Save" button to ensure that any modifications made are successfully saved.',
+  uploadError: 'Something is wrong with upload file.',
+  uploadSuccess: 'File uploaded.'
 };

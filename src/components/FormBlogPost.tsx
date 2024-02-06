@@ -6,6 +6,7 @@ import { FormEditBlogPost } from './FormEditBlogPost';
 import { PostResponse } from '../types/Post';
 
 type Props = {
+  isEdit: boolean,
   action: string,
   open: boolean,
   post?: PostResponse,
@@ -13,7 +14,7 @@ type Props = {
   handleChange: (key: string, value: string) => void
 }
 
-export const FormBlogPost: FC<Props> = ({ post, action, open, handleAction, handleChange }) => {
+export const FormBlogPost: FC<Props> = ({ isEdit, post, action, open, handleAction, handleChange }) => {
   const isDelete = action === 'delete';
 
   return (
@@ -26,7 +27,7 @@ export const FormBlogPost: FC<Props> = ({ post, action, open, handleAction, hand
         <Stack alignItems='center'justifyContent='center' minHeight='100vh'>
           {isDelete
             ? <FormDeleteBlogPost open={open} handleAction={handleAction}></FormDeleteBlogPost>
-            : <FormEditBlogPost isEdit post={post} open={open} handleAction={handleAction} handleChange={handleChange}></FormEditBlogPost>
+            : <FormEditBlogPost isEdit={isEdit} post={post} open={open} handleAction={handleAction} handleChange={handleChange}></FormEditBlogPost>
           }
         </Stack>
       </Modal>

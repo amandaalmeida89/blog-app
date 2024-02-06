@@ -8,39 +8,53 @@ import Stack from '@mui/material/Stack';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { FormBlogPost } from '../../components/FormBlogPost';
 import { FabBlogPost } from '../../components/FabBlogPost';
 
 export default function BlogDetail() {
   const [post, setPost] = useState<PostResponse>();
-  const [updatePost, setUpdatePost] = useState({});
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState('');
-  const { deleteBlog, getBlog, updateBlog } = useBlogContext();
+  const { deletePost, getPost, updatePost } = useBlogContext();
   const { imgUrl, title, content, createdAt } = post || {};
   const pathname = useSearchParams();
   const router = useRouter();
-  const index = pathname.get('index') || '';
-  const blogIndex = parseInt(index);
+  const id = pathname.get('post') || '';
+  const postId = parseInt(id);
 
   const imageDefault = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnqgRAb49-QsVJpeNhEzlwDb5nxh7u8M9t-Q&usqp=CAU';
   const image = imgUrl ? imgUrl : imageDefault;
 
-  const getBlogInfo = useCallback(() => {
-    const post = getBlog(blogIndex);
+  const fabAction = [
+    {
+      type: 'edit',
+      icon: <EditIcon />,
+      mt: '8px'
+    },
+    {
+      type: 'delete',
+      icon: <DeleteIcon />
+    },
+  ]
+
+  const getPostInfo = useCallback(() => {
+    const post = getPost(postId);
     setPost(post);
-  }, [blogIndex, getBlog]);
+  }, [postId, getPost]);
 
   const handleAction = (action?: string) => {
     if (action === 'delete') {
-      deleteBlog(blogIndex);
+      deletePost(postId);
       return router.push({ pathname: '/list' });
     }
 
     if (action === 'save' && post) {
-      const edited = { ...post, ...updatePost };
-      updateBlog(blogIndex, edited);
-      getBlogInfo();
+      if (post.title && post.content) {
+        updatePost(postId, post);
+        getPostInfo();
+      }
     }
 
     setOpen(false);
@@ -52,12 +66,14 @@ export default function BlogDetail() {
   };
 
   const handleChange = (key: string, value: string) => {
-    setUpdatePost({ ...updatePost, [key]: value });
+    if (post) {
+      setPost({ ...post, [key]: value });
+    }
   };
 
   useEffect(() => {
-    getBlogInfo();
-  },[router.isReady, getBlogInfo]);
+    getPostInfo();
+  },[router.isReady, getPostInfo]);
 
   return (
     <Container>
@@ -71,8 +87,10 @@ export default function BlogDetail() {
           <Typography marginTop='16px' textAlign='center'>{content}</Typography>
         </Stack>
       </Stack>
-      <FormBlogPost post={post} action={action} open={open} handleAction={handleAction} handleChange={handleChange}></FormBlogPost>
-      <FabBlogPost handleOpen={handleOpen}></FabBlogPost>
+      <FormBlogPost isEdit post={post} action={action} open={open} handleAction={handleAction} handleChange={handleChange}></FormBlogPost>
+      <Stack marginTop='16px' flexDirection='row' justifyContent='end'>
+        {fabAction.map((item, index)=> <FabBlogPost key={index} item={item} handleOpen={handleOpen}></FabBlogPost>)}
+      </Stack>
     </Container>
   );
 }
