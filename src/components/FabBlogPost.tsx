@@ -15,7 +15,7 @@ type Props = {
 }
 
 export const FabBlogPost: FC<Props> = ({ item, handleOpen }) => {
-  const { type, icon, mt, extended, label } = item || {}
+  const { type, icon, mt, extended, label } = item || {};
 
   return (
     <Fab variant={extended ? 'extended' : 'circular'} onClick={() => handleOpen(type)} color="primary" aria-label={type} sx={{marginRight: mt}}>

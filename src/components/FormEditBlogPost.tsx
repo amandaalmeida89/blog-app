@@ -9,7 +9,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { CustomAlert } from './CustomAlert'
+import { CustomAlert } from './CustomAlert';
 import { PostResponse } from '../types/Post';
 import { texts } from '../texts';
 
@@ -23,7 +23,7 @@ type Props = {
   text: string
 }
 
-type Severity = "error" | "success" | "info" | "warning"
+type Severity = 'error' | 'success' | 'info' | 'warning'
 
 type Alert = {
   severity: Severity,
@@ -51,31 +51,31 @@ export const FormEditBlogPost: FC<Props> = ({ isEdit, open, post, handleAction, 
 
   const getBase64 = (file: Blob): Promise<string> => {
     return new Promise(resolve => {
-      let reader = new FileReader();
+      const reader = new FileReader();
 
       reader.readAsDataURL(file);
 
       reader.onload = () => {
-        const baseURL = reader.result
-        //@ts-ignore
+        const baseURL = reader.result;
+        //@ts-expect-error 'I want to know'
         resolve(baseURL);
-      }
-    })
-  }
+      };
+    });
+  };
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return
-    const file = e.target.files[0]
-    const { name } = file || {}
-    setFileName(name)
+    if (!e.target.files) return;
+    const file = e.target.files[0];
+    const { name } = file || {};
+    setFileName(name);
     getBase64(file)
     .then((result: string) => {
-      const fileBaseUrl = result
-      handleChange('imgUrl', fileBaseUrl)
-      setAlert({ severity: 'success', text: texts.uploadSuccess })
+      const fileBaseUrl = result;
+      handleChange('imgUrl', fileBaseUrl);
+      setAlert({ severity: 'success', text: texts.uploadSuccess });
     })
-    .catch(() => setAlert({ severity: 'error', text: texts.uploadError }))
-  }
+    .catch(() => setAlert({ severity: 'error', text: texts.uploadError }));
+  };
 
   return (
     <Dialog

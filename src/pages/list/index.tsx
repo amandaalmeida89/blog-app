@@ -29,7 +29,7 @@ export default function BlogList() {
     label: 'New',
     icon: <AddIcon sx={{ mr: 1 }} />,
     extended: true
-  }
+  };
 
   const handleChange = (key: string, value: string) => {
     const newPost = { ...postInfo, ...{ [key]: value } };
@@ -37,15 +37,15 @@ export default function BlogList() {
   };
 
   const handleAction = (action?: string) => {
-    const createdAt = new Date().toISOString()
-    const id = total + 1
+    const createdAt = new Date().toISOString();
+    const id = total + 1;
 
-    const isValidForm = postInfo.title && postInfo.content
+    const isValidForm = postInfo.title && postInfo.content;
 
     if (action === 'save' && isValidForm) {
-      const post = { id, createdAt }
+      const post = { id, createdAt };
       const newPost = { ...post, ...postInfo };
-      createPost(newPost)
+      createPost(newPost);
     }
     setOpen(false);
   };
@@ -54,7 +54,7 @@ export default function BlogList() {
   const handleOpen = () => {
     setOpen(true);
     setAction(action);
-  }
+  };
 
   const handlePagination = (_: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);

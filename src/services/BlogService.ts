@@ -3,12 +3,12 @@ import { PostResponse } from '../types/Post';
 export const BlogService = (blogList: PostResponse[], setBlogList = (_: any) => _) => {
   const offset = 8;
   const pagination = Math.ceil(blogList?.length/ offset);
-  const total = blogList?.length
+  const total = blogList?.length;
 
   const createPost = (post: PostResponse) => {
-    blogList.push(post)
+    blogList.push(post);
     setBlogList([...blogList]);
-  }
+  };
 
   const deletePost = (postId: number) => {
     const newList = blogList?.filter(({ id }) => id !== postId);
@@ -16,7 +16,7 @@ export const BlogService = (blogList: PostResponse[], setBlogList = (_: any) => 
   };
 
   const getPost = (postId: number) => {
-    const post = blogList.filter(({ id })=> id === postId)
+    const post = blogList.filter(({ id })=> id === postId);
     return post[0];
   };
 
@@ -37,7 +37,7 @@ export const BlogService = (blogList: PostResponse[], setBlogList = (_: any) => 
         blogList[index] = post;
         setBlogList([...blogList]);
       }
-    })
+    });
   };
 
   return { createPost, deletePost, getPost, getList, updatePost, pagination, total };

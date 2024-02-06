@@ -37,7 +37,7 @@ export default function BlogDetail() {
       type: 'delete',
       icon: <DeleteIcon />
     },
-  ]
+  ];
 
   const getPostInfo = useCallback(() => {
     const post = getPost(postId);
