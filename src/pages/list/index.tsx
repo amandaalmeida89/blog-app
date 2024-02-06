@@ -20,7 +20,7 @@ export default function BlogList() {
   const [postInfo, setPostInfo] = useState({ title: '', content: '', imgUrl: null });
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState('');
-  const { createPost, getList, pagination, total } = useBlogContext();
+  const { createPost, getList, pagination } = useBlogContext();
   const [ page, setPage ] = useLocalStorage('page', 1);
   const router = useRouter();
 
@@ -38,7 +38,7 @@ export default function BlogList() {
 
   const handleAction = (action?: string) => {
     const createdAt = new Date().toISOString();
-    const id = total + 1;
+    const id = new Date().getTime();
 
     const isValidForm = postInfo.title && postInfo.content;
 

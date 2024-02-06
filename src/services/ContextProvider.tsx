@@ -10,8 +10,7 @@ type ContextProps = {
   getPost: (postId: number) => PostResponse;
   deletePost: (postId: number) => void;
   updatePost: (postId: number, post: PostResponse) => void;
-  pagination: number;
-  total: number
+  pagination: number
 };
 
 export const Context = createContext<ContextProps>(BlogService(blogAppSeed));
@@ -19,7 +18,7 @@ export const Context = createContext<ContextProps>(BlogService(blogAppSeed));
 export const ContextProvider = ({ children }: PropsWithChildren) => {
   const [ blogList, setBlogList ] = useLocalStorage('blogList', blogAppSeed);
 
-  const { createPost, deletePost, getPost, getList, updatePost, pagination, total } = BlogService(blogList, setBlogList);
+  const { createPost, deletePost, getPost, getList, updatePost, pagination } = BlogService(blogList, setBlogList);
 
   const contextValue = {
     createPost,
@@ -28,7 +27,6 @@ export const ContextProvider = ({ children }: PropsWithChildren) => {
     getList,
     updatePost,
     pagination,
-    total
   };
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;

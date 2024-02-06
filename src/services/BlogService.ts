@@ -3,7 +3,6 @@ import { PostResponse } from '../types/Post';
 export const BlogService = (blogList: PostResponse[], setBlogList = (_: any) => _) => {
   const offset = 8;
   const pagination = Math.ceil(blogList?.length/ offset);
-  const total = blogList?.length;
 
   const createPost = (post: PostResponse) => {
     blogList.push(post);
@@ -45,5 +44,5 @@ export const BlogService = (blogList: PostResponse[], setBlogList = (_: any) => 
     });
   };
 
-  return { createPost, deletePost, getPost, getList, updatePost, pagination, total };
+  return { createPost, deletePost, getPost, getList, updatePost, pagination };
 };
