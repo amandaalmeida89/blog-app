@@ -13,6 +13,7 @@ import { CustomAlert } from './CustomAlert';
 import { PostResponse } from '../types/Post';
 import { texts } from '../texts';
 import { getBase64 } from '../utils/formatter';
+import styles from '../styles/FormEditBlogPost.module.css';
 
 type Props = {
   isEdit: boolean,
@@ -91,7 +92,7 @@ export const FormEditBlogPost: FC<Props> = ({ isEdit, open, post, handleAction, 
           defaultValue={title}
           fullWidth
         />
-        <textarea required style={{ width: '100%', marginTop: '16px' }} rows={20} defaultValue={content} onChange={(e) => handleChange('content', e.target.value)}></textarea>
+        <textarea required className={styles.textarea} rows={20} defaultValue={content} onChange={(e) => handleChange('content', e.target.value)}></textarea>
       </DialogContent>
       <DialogActions>
         <Button onClick={() => handleAction()}>{texts.buttonCancel}</Button>
