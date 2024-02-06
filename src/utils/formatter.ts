@@ -1,3 +1,17 @@
+export const getBase64 = (file: Blob): Promise<string> => {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      const baseURL = reader.result;
+      //@ts-expect-error 'I want to know'
+      resolve(baseURL);
+    };
+  });
+};
+
 export const parsedNumber = (number: number, targetLength: number, padString: string) => {
   return number.toString().padStart(targetLength, padString);
 };

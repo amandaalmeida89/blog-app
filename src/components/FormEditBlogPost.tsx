@@ -12,15 +12,14 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { CustomAlert } from './CustomAlert';
 import { PostResponse } from '../types/Post';
 import { texts } from '../texts';
+import { getBase64 } from '../utils/formatter'
 
 type Props = {
   isEdit: boolean,
   post?: PostResponse,
   open: boolean,
   handleAction: (action?: string) => void,
-  handleChange: (key: string, value: string) => void,
-  severity: string,
-  text: string
+  handleChange: (key: string, value: string) => void
 }
 
 type Severity = 'error' | 'success' | 'info' | 'warning'
@@ -48,20 +47,6 @@ export const FormEditBlogPost: FC<Props> = ({ isEdit, open, post, handleAction, 
   const [alert, setAlert] = useState<Alert>({ severity: 'info', text: '' });
   const { title, content } = post || {};
   const titleLabel = isEdit ? texts.editTitle : texts.createTitle;
-
-  const getBase64 = (file: Blob): Promise<string> => {
-    return new Promise(resolve => {
-      const reader = new FileReader();
-
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        const baseURL = reader.result;
-        //@ts-expect-error 'I want to know'
-        resolve(baseURL);
-      };
-    });
-  };
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;

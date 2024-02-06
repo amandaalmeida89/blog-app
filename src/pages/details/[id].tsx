@@ -87,7 +87,7 @@ export default function BlogDetail() {
           <Typography marginTop='16px' textAlign='center'>{content}</Typography>
         </Stack>
       </Stack>
-      <FormBlogPost isEdit post={post} action={action} open={open} handleAction={handleAction} handleChange={handleChange}></FormBlogPost>
+      <FormBlogPost isEdit={true} post={post} action={action} open={open} handleAction={handleAction} handleChange={handleChange}></FormBlogPost>
       <Stack marginTop='16px' flexDirection='row' justifyContent='end'>
         {fabAction.map((item, index)=> <FabBlogPost key={index} item={item} handleOpen={handleOpen}></FabBlogPost>)}
       </Stack>
