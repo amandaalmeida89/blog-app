@@ -24,6 +24,11 @@ export const BlogService = (blogList: PostResponse[], setBlogList = (_: any) => 
     const count = (page * offset) - offset;
     const delimiter = count + offset;
 
+    blogList.sort((a, b) => {
+      const parse = (createdAt: string) => Date.parse(createdAt);
+      return parse(b.createdAt) - parse(a.createdAt);
+    });
+
     if (page <= pagination) {
       return blogList?.slice(count, delimiter);
     }
