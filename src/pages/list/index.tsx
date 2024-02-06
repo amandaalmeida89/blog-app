@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import Pagination from '@mui/material/Pagination';
 import Grid from '@mui/material/Grid';
 import AddIcon from '@mui/icons-material/Add';
+import Container from '@mui/material/Container';
 import { formattedDate } from '../../utils/formatter';
 import { PostResponse } from '../../types/Post';
 import { useBlogContext } from '../../services/ContextProvider';
@@ -78,26 +79,28 @@ export default function BlogList() {
 
   return (
     <Stack>
-      <Stack alignItems='end'>
-        <FabBlogPost item={fabAction} handleOpen={handleOpen}></FabBlogPost>
-      </Stack>
       <FormBlogPost isEdit={false} action={action} open={open} handleAction={handleAction} handleChange={handleChange}></FormBlogPost>
-      <Grid container spacing={2}>
-        {list.map(({ title, imgUrl, content, createdAt, id }, index) =>
-          <Grid justifyContent={'center'} display={'flex'} key={index} item xs={12} sm={12} md={3}>
-            <Card sx={{maxWidth: { xs: 400, md: 280, lg: 400 }, width: '100%', marginTop:'32px', cursor:'pointer'}} key={index} onClick={() => redirectToDetail(id)}>
-              {media(imgUrl || '')}
-              <CardContent>
-                <Typography gutterBottom fontWeight='500' textAlign='center'>{formattedDate(createdAt)}</Typography>
-                <Typography textAlign='center' color='primary.dark' variant='h6'>{title}</Typography>
-                <Typography textOverflow='ellipsis' whiteSpace='nowrap' overflow='hidden' color="text.secondary">
-                  {content}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        )}
-      </Grid>
+      <Container>
+        <Stack alignItems='end'>
+          <FabBlogPost item={fabAction} handleOpen={handleOpen}></FabBlogPost>
+        </Stack>
+        <Grid container spacing={2}>
+          {list.map(({ title, imgUrl, content, createdAt, id }, index) =>
+            <Grid justifyContent={'center'} display={'flex'} key={index} item xs={12} sm={12} md={3}>
+              <Card sx={{maxWidth: { xs: 400, md: 280, lg: 400 }, width: '100%', marginTop:'32px', cursor:'pointer'}} key={index} onClick={() => redirectToDetail(id)}>
+                {media(imgUrl || '')}
+                <CardContent>
+                  <Typography gutterBottom fontWeight='500' textAlign='center'>{formattedDate(createdAt)}</Typography>
+                  <Typography textAlign='center' color='primary.dark' variant='h6'>{title}</Typography>
+                  <Typography textOverflow='ellipsis' whiteSpace='nowrap' overflow='hidden' color="text.secondary">
+                    {content}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          )}
+        </Grid>
+      </Container>
       <Stack marginTop={'3%'} display={'flex'} alignItems={'center'} spacing={2}>
         {list.length
           ? <Pagination color="primary" count={pagination} page={page} onChange={handlePagination} />

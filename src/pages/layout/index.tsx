@@ -10,7 +10,7 @@ export default function Layout ({ children }: PropsWithChildren) {
   return (
     <ContextProvider>
       <Header></Header>
-      <Stack justifyContent={'space-between'} sx={{minHeight: '100vh'}}>
+      <Stack marginTop='32px' justifyContent={'space-between'} sx={{minHeight: '100vh'}}>
         <Stack padding={4}>
           <Typography sx={{typography: { xs: 'h4', md: 'h4', lg: 'h2' }}} textAlign='center' color='primary.dark'>{texts.title}</Typography>
           <Typography sx={{typography: { xs: 'h6', md: 'h5', lg: 'h5' }}} textAlign='center' color='primary.dark'>{texts.description}</Typography>
