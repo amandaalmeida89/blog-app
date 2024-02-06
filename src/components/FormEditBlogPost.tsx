@@ -12,7 +12,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { CustomAlert } from './CustomAlert';
 import { PostResponse } from '../types/Post';
 import { texts } from '../texts';
-import { getBase64 } from '../utils/formatter'
+import { getBase64 } from '../utils/formatter';
 
 type Props = {
   isEdit: boolean,
