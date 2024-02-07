@@ -1,31 +1,24 @@
 export const getBase64 = (file: Blob): Promise<string> => {
-  const width = 300;
-  const height = 200;
-
   return new Promise((resolve, reject) => {
+    const validFormat = ['/jpeg', '/png', '/gif', '/svg', '/webp'];
+
+    const typeImage = validFormat.filter((format) => {
+      const { type } = file || {};
+      return type.includes(format);
+    });
+  
+    if (!typeImage.length) {
+      reject();
+    }
+
     const reader = new FileReader();
 
     reader.readAsDataURL(file);
 
-    reader.onload = (event) => {
-      const img = new Image();
-      img.onload = function() {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        if (!ctx) {
-          console.error('Contexto 2D não suportado.');
-          reject()
-          return;
-        }
-        canvas.width = width;
-        canvas.height = height;
-        ctx.drawImage(img, 0, 0, width, height);
-
-        const baseURL = canvas.toDataURL('image/jpeg');
-        resolve(baseURL);
-      };
-
-      img.src = event.target?.result as string;
+    reader.onload = () => {
+      const baseURL = reader.result;
+      //@ts-expect-error 'reader.onload return string | ArrayBuffer | null'
+      resolve(baseURL);
     };
   });
 };

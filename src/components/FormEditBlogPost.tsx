@@ -44,7 +44,7 @@ const VisuallyHiddenInput = styled('input')({
 
 
 export const FormEditBlogPost: FC<Props> = ({ isEdit, open, post, handleAction, handleChange }) => {
-  const [fileName, setFileName] = useState('Upload file');
+  const [fileName, setFileName] = useState(texts.uploadButtonLabel);
   const [alert, setAlert] = useState<Alert>({ severity: 'info', text: '' });
   const { title, content } = post || {};
   const titleLabel = isEdit ? texts.editTitle : texts.createTitle;
@@ -60,7 +60,10 @@ export const FormEditBlogPost: FC<Props> = ({ isEdit, open, post, handleAction, 
       handleChange('imgUrl', fileBaseUrl);
       setAlert({ severity: 'success', text: texts.uploadSuccess });
     })
-    .catch(() => setAlert({ severity: 'error', text: texts.uploadError }));
+    .catch(() => {
+      setAlert({ severity: 'error', text: texts.uploadError });
+      setFileName(texts.uploadButtonLabel);
+    });
   };
 
   return (
