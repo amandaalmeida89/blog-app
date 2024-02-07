@@ -6,7 +6,7 @@ export const getBase64 = (file: Blob): Promise<string> => {
 
     reader.onload = () => {
       const baseURL = reader.result;
-      //@ts-expect-error 'I want to know'
+      //@ts-expect-error 'reader.onload return string | ArrayBuffer | null'
       resolve(baseURL);
     };
   });

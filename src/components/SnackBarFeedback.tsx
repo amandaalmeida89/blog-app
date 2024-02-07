@@ -17,7 +17,7 @@ export default function SnackBarFeedback () {
     if(feedback) {
       setOpen(true);
     }
-  }, [feedback])
+  }, [feedback]);
 
   return (
     <Snackbar
@@ -26,4 +26,4 @@ export default function SnackBarFeedback () {
       message={feedback}
       onClose={handleClose}
     />
-)};
+);}

@@ -46,7 +46,7 @@ export default function BlogDetail() {
 
   const handleAction = (action?: string) => {
     if (action === 'close') {
-      getPostInfo()
+      getPostInfo();
     }
   
     if (action === 'delete') {

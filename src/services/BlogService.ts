@@ -1,5 +1,5 @@
 import { PostResponse } from '../types/Post';
-import { texts } from '../texts'
+import { texts } from '../texts';
 
 type Args = {
   blogList: PostResponse[];
@@ -16,7 +16,7 @@ export const BlogService = ({ blogList, setBlogList, feedbackMessage }: Args) =>
 
     if (setBlogList && feedbackMessage) {
       setBlogList([...blogList]);
-      feedbackMessage(texts.createSuccess)
+      feedbackMessage(texts.createSuccess);
     }
   };
 
@@ -25,7 +25,7 @@ export const BlogService = ({ blogList, setBlogList, feedbackMessage }: Args) =>
 
     if (setBlogList && feedbackMessage) {
       setBlogList(newList);
-      feedbackMessage(texts.deleteSuccess)
+      feedbackMessage(texts.deleteSuccess);
     }
   };
 
@@ -57,7 +57,7 @@ export const BlogService = ({ blogList, setBlogList, feedbackMessage }: Args) =>
 
         if (setBlogList && feedbackMessage) {
           setBlogList([...blogList]);
-          feedbackMessage(texts.updateSuccess)
+          feedbackMessage(texts.updateSuccess);
         }
       }
     });
