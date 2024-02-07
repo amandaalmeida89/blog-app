@@ -3,6 +3,8 @@
   margin-top: 16px;
   border-radius: 4px;
   border-color: #bdbdbd;
+  font-family: 'Inter';
+  padding: 4px;
 }
 
 .textarea:focus {

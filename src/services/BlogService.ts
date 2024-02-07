@@ -1,17 +1,32 @@
 import { PostResponse } from '../types/Post';
+import { texts } from '../texts'
 
-export const BlogService = (blogList: PostResponse[], setBlogList = (_: any) => _) => {
+type Args = {
+  blogList: PostResponse[];
+  setBlogList?: (_: any) => void;
+  feedbackMessage?: (message: string) => void;
+}
+
+export const BlogService = ({ blogList, setBlogList, feedbackMessage }: Args) => {
   const offset = 8;
   const pagination = Math.ceil(blogList?.length/ offset);
 
   const createPost = (post: PostResponse) => {
     blogList.push(post);
-    setBlogList([...blogList]);
+
+    if (setBlogList && feedbackMessage) {
+      setBlogList([...blogList]);
+      feedbackMessage(texts.createSuccess)
+    }
   };
 
   const deletePost = (postId: number) => {
     const newList = blogList?.filter(({ id }) => id !== postId);
-    setBlogList(newList);
+
+    if (setBlogList && feedbackMessage) {
+      setBlogList(newList);
+      feedbackMessage(texts.deleteSuccess)
+    }
   };
 
   const getPost = (postId: number) => {
@@ -39,7 +54,11 @@ export const BlogService = (blogList: PostResponse[], setBlogList = (_: any) => 
     return blogList.filter(({ id }, index) => {
       if (postId === id) {
         blogList[index] = post;
-        setBlogList([...blogList]);
+
+        if (setBlogList && feedbackMessage) {
+          setBlogList([...blogList]);
+          feedbackMessage(texts.updateSuccess)
+        }
       }
     });
   };
