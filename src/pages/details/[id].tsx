@@ -45,6 +45,10 @@ export default function BlogDetail() {
   }, [postId, getPost]);
 
   const handleAction = (action?: string) => {
+    if (action === 'close') {
+      getPostInfo()
+    }
+  
     if (action === 'delete') {
       deletePost(postId);
       return router.push({ pathname: '/list' });
@@ -79,7 +83,7 @@ export default function BlogDetail() {
     <Container>
       <Stack alignItems='center' sx={{backgroundColor: 'primary.light', flexDirection: { sm: 'column', md: 'row' }}} marginTop='48px'>
         <Stack width='80%' alignItems='center' p={2}>
-          <CardMedia sx={{ objectFit: 'cover' }} component="img" image={image} alt="image blog"></CardMedia>
+          <CardMedia sx={{ minHeight: { md: 260, lg: 320 } }} component="img" image={image} alt="image blog"></CardMedia>
           <Typography marginTop='12px' fontWeight='500' textAlign='center'>{formattedDate(createdAt || '')}</Typography>
         </Stack>
         <Stack width='100%' p={2}>

@@ -9,7 +9,7 @@ import { texts } from '../texts';
 
 type Props = {
   open: boolean,
-  handleAction: (action?: string) => void
+  handleAction: (action: string) => void
 }
 
 export const FormDeleteBlogPost: FC<Props> =({ open, handleAction }) => {
@@ -27,7 +27,7 @@ export const FormDeleteBlogPost: FC<Props> =({ open, handleAction }) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => handleAction()}>{texts.buttonDisagree}</Button>
+        <Button onClick={() => handleAction('close')}>{texts.buttonDisagree}</Button>
         <Button onClick={() => handleAction('delete')} autoFocus>{texts.buttonAgree}</Button>
       </DialogActions>
     </Dialog>

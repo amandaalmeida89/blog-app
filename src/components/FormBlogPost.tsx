@@ -10,7 +10,7 @@ type Props = {
   action: string,
   open: boolean,
   post?: PostResponse,
-  handleAction: (action?: string) => void,
+  handleAction: (action: string) => void,
   handleChange: (key: string, value: string) => void
 }
 
@@ -21,7 +21,7 @@ export const FormBlogPost: FC<Props> = ({ isEdit, post, action, open, handleActi
     <Stack>
       <Modal
         open={open}
-        onClose={() => handleAction()}
+        onClose={() => handleAction('close')}
         aria-labelledby="modal-modal-form"
         aria-describedby="modal-modal-form-blog">
         <Stack alignItems='center'justifyContent='center' minHeight='100vh'>

@@ -19,7 +19,7 @@ type Props = {
   isEdit: boolean,
   post?: PostResponse,
   open: boolean,
-  handleAction: (action?: string) => void,
+  handleAction: (action: string) => void,
   handleChange: (key: string, value: string) => void
 }
 
@@ -95,7 +95,7 @@ export const FormEditBlogPost: FC<Props> = ({ isEdit, open, post, handleAction, 
         <textarea required className={styles.textarea} rows={20} defaultValue={content} onChange={(e) => handleChange('content', e.target.value)}></textarea>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => handleAction()}>{texts.buttonCancel}</Button>
+        <Button onClick={() => handleAction('close')}>{texts.buttonCancel}</Button>
         <Button onClick={() => handleAction('save')} autoFocus>{texts.buttonSave}</Button>
       </DialogActions>
     </Dialog>
