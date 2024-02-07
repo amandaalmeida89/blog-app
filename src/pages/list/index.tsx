@@ -62,7 +62,7 @@ export default function BlogList() {
   };
 
   const media = (imgUrl: string) => {
-    const imageDefault = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnqgRAb49-QsVJpeNhEzlwDb5nxh7u8M9t-Q&usqp=CAU';
+    const imageDefault = '/blog.jpeg';
     const image = imgUrl ? imgUrl : imageDefault;
     return <CardMedia component="img" sx={{ height: { xs: 266, md: 150, lg: 266 }}} image={image} alt="image blog"></CardMedia>;
   };

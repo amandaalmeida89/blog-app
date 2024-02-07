@@ -24,7 +24,7 @@ export default function BlogDetail() {
   const id = pathname.get('post') || '';
   const postId = parseInt(id);
 
-  const imageDefault = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnqgRAb49-QsVJpeNhEzlwDb5nxh7u8M9t-Q&usqp=CAU';
+  const imageDefault = '/blog.jpeg';
   const image = imgUrl ? imgUrl : imageDefault;
 
   const fabAction = [
@@ -83,7 +83,7 @@ export default function BlogDetail() {
     <Container>
       <Stack alignItems='center' sx={{backgroundColor: 'primary.light', flexDirection: { sm: 'column', md: 'row' }}} marginTop='48px'>
         <Stack width='80%' alignItems='center' p={2}>
-          <CardMedia sx={{ minHeight: { md: 260, lg: 320 } }} component="img" image={image} alt="image blog"></CardMedia>
+          <CardMedia component="img" image={image} alt="image blog"></CardMedia>
           <Typography marginTop='12px' fontWeight='500' textAlign='center'>{formattedDate(createdAt || '')}</Typography>
         </Stack>
         <Stack width='100%' p={2}>
