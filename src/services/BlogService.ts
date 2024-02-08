@@ -12,8 +12,8 @@ export const BlogService = ({ blogList, setBlogList, feedbackMessage, pagination
   const offset = 8;
 
   const pagination = (list: PostResponse[]) => {
-    return Math.ceil(list?.length/ offset)
-  }
+    return Math.ceil(list?.length/ offset);
+  };
 
   const createPost = (post: PostResponse) => {
     blogList.push(post);
@@ -44,12 +44,12 @@ export const BlogService = ({ blogList, setBlogList, feedbackMessage, pagination
 
     const items = isSearch
       ? blogList.filter(({ title }) => title?.startsWith(titleName))
-      : blogList
+      : blogList;
 
-    const paginationNumber = pagination(items)
+    const paginationNumber = pagination(items);
 
     if (paginationValue) {
-      paginationValue(paginationNumber)
+      paginationValue(paginationNumber);
     }
 
     items.sort((a, b) => {
