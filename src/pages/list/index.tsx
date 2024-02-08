@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Stack from '@mui/material/Stack';
 import Card from '@mui/material/Card';
@@ -9,20 +9,23 @@ import Pagination from '@mui/material/Pagination';
 import Grid from '@mui/material/Grid';
 import AddIcon from '@mui/icons-material/Add';
 import Container from '@mui/material/Container';
+import TextField from '@mui/material/TextField';
 import { formattedDate } from '../../utils/formatter';
 import { PostResponse } from '../../types/Post';
 import { useBlogContext } from '../../services/ContextProvider';
 import { useLocalStorage } from '../../services/useLocalStorage';
 import { FabBlogPost } from '../../components/FabBlogPost';
 import { FormBlogPost } from '../../components/FormBlogPost';
+import debounce from 'lodash.debounce';
 
 export default function BlogList() {
   const [list, setList] = useState<PostResponse[]>([]);
   const [postInfo, setPostInfo] = useState({ title: '', content: '', imgUrl: null });
   const [open, setOpen] = useState(false);
   const [action, setAction] = useState('');
+  const [titleName, setTitleName] = useState('');
+  const [page, setPage] = useLocalStorage('page', 1);
   const { createPost, getList, pagination } = useBlogContext();
-  const [ page, setPage ] = useLocalStorage('page', 1);
   const router = useRouter();
 
   const fabAction = {
@@ -59,7 +62,12 @@ export default function BlogList() {
 
   const handlePagination = (_: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const handleTitleOnChange = useMemo(() => {
+    return debounce(setTitleName, 300);
+  }, []);
 
   const media = (imgUrl: string) => {
     const imageDefault = '/blog.jpeg';
@@ -73,16 +81,21 @@ export default function BlogList() {
   };
 
   useEffect(() => {
-    const list = getList(page);
+    const isSearch = !!titleName;
+    const list = getList(page, isSearch, titleName);
     setList(list);
-  },[page, getList]);
+  },[page, titleName, getList]);
 
   return (
     <Stack>
       <FormBlogPost isEdit={false} action={action} open={open} handleAction={handleAction} handleChange={handleChange}></FormBlogPost>
       <Container>
-        <Stack alignItems='end'>
-          <FabBlogPost item={fabAction} handleOpen={handleOpen}></FabBlogPost>
+        <Stack marginTop='32px' flexDirection='row' alignItems='center' justifyContent='end'>
+          <TextField size='small' id="outlined-basic" label="Search by blog title" variant="outlined"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {handleTitleOnChange(event.target.value);}}/>
+          <Stack marginLeft='8px'>
+            <FabBlogPost item={fabAction} handleOpen={handleOpen}></FabBlogPost>
+          </Stack>
         </Stack>
         <Grid container spacing={2}>
           {list.map(({ title, imgUrl, content, createdAt, id }, index) =>

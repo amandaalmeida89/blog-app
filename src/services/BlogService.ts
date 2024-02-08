@@ -5,11 +5,15 @@ type Args = {
   blogList: PostResponse[];
   setBlogList?: (_: any) => void;
   feedbackMessage?: (message: string) => void;
+  paginationValue?: (value: number) => void;
 }
 
-export const BlogService = ({ blogList, setBlogList, feedbackMessage }: Args) => {
+export const BlogService = ({ blogList, setBlogList, feedbackMessage, paginationValue }: Args) => {
   const offset = 8;
-  const pagination = Math.ceil(blogList?.length/ offset);
+
+  const pagination = (list: PostResponse[]) => {
+    return Math.ceil(list?.length/ offset)
+  }
 
   const createPost = (post: PostResponse) => {
     blogList.push(post);
@@ -34,20 +38,30 @@ export const BlogService = ({ blogList, setBlogList, feedbackMessage }: Args) =>
     return post[0];
   };
 
-  const getList = (page: number) => {
+  const getList = (page: number, isSearch: boolean, titleName: string) => {
     const count = (page * offset) - offset;
     const delimiter = count + offset;
 
-    blogList.sort((a, b) => {
+    const items = isSearch
+      ? blogList.filter(({ title }) => title?.startsWith(titleName))
+      : blogList
+
+    const paginationNumber = pagination(items)
+
+    if (paginationValue) {
+      paginationValue(paginationNumber)
+    }
+
+    items.sort((a, b) => {
       const parse = (createdAt: string) => Date.parse(createdAt);
       return parse(b.createdAt) - parse(a.createdAt);
     });
 
-    if (page <= pagination) {
-      return blogList?.slice(count, delimiter);
+    if (page <= paginationNumber) {
+      return items?.slice(count, delimiter);
     }
 
-    return blogList;
+    return items;
   };
 
   const updatePost = (postId: number, post: PostResponse) => {
@@ -63,5 +77,11 @@ export const BlogService = ({ blogList, setBlogList, feedbackMessage }: Args) =>
     });
   };
 
-  return { createPost, deletePost, getPost, getList, updatePost, pagination };
+  return {
+    createPost,
+    deletePost,
+    getPost,
+    getList,
+    updatePost,
+  };
 };
