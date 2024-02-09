@@ -1,10 +1,10 @@
-import { PostResponse } from '../types/Post';
+import { PostResponse, Feedback, FeedbackArgs } from '../types/Blog';
 import { texts } from '../texts';
 
 type Args = {
   blogList: PostResponse[];
   setBlogList?: (_: any) => void;
-  feedbackMessage?: (message: string) => void;
+  feedbackMessage?: FeedbackArgs;
   paginationValue?: (value: number) => void;
 }
 
@@ -15,21 +15,27 @@ export const BlogService = ({ blogList, setBlogList, feedbackMessage, pagination
     return Math.ceil(list?.length/ offset);
   };
 
+  const sendGlobalFeedback = ({ message, action, isOpen }: Feedback) => {
+    if (feedbackMessage) {
+      feedbackMessage({ message, action, isOpen });
+    }
+  };
+
   const createPost = (post: PostResponse) => {
     blogList.push(post);
 
-    if (setBlogList && feedbackMessage) {
+    if (setBlogList) {
       setBlogList([...blogList]);
-      feedbackMessage(texts.createSuccess);
+      sendGlobalFeedback({ message: texts.createSuccess, isOpen: true });
     }
   };
 
   const deletePost = (postId: number) => {
     const newList = blogList?.filter(({ id }) => id !== postId);
 
-    if (setBlogList && feedbackMessage) {
+    if (setBlogList) {
       setBlogList(newList);
-      feedbackMessage(texts.deleteSuccess);
+      sendGlobalFeedback({ message: texts.deleteSuccess, isOpen: true });
     }
   };
 
@@ -38,12 +44,22 @@ export const BlogService = ({ blogList, setBlogList, feedbackMessage, pagination
     return post[0];
   };
 
-  const getList = (page: number, isSearch: boolean, titleName: string) => {
+  const getList = (page: number, titleName: string) => {
+    const isSearch = !!titleName;
+  
     const count = (page * offset) - offset;
     const delimiter = count + offset;
 
+    const filterByTitle = () => {
+      return blogList.filter(({ title }) => {
+        const formattedTitleName = titleName?.toLowerCase();
+        const formattedTitle = title?.toLowerCase();
+        return formattedTitle?.startsWith(formattedTitleName);
+      });
+    };
+
     const items = isSearch
-      ? blogList.filter(({ title }) => title?.startsWith(titleName))
+      ? filterByTitle()
       : blogList;
 
     const paginationNumber = pagination(items);
@@ -69,9 +85,9 @@ export const BlogService = ({ blogList, setBlogList, feedbackMessage, pagination
       if (postId === id) {
         blogList[index] = post;
 
-        if (setBlogList && feedbackMessage) {
+        if (setBlogList) {
           setBlogList([...blogList]);
-          feedbackMessage(texts.updateSuccess);
+          sendGlobalFeedback({ message: texts.updateSuccess, isOpen: true });
         }
       }
     });
@@ -82,6 +98,7 @@ export const BlogService = ({ blogList, setBlogList, feedbackMessage, pagination
     deletePost,
     getPost,
     getList,
+    sendGlobalFeedback,
     updatePost,
   };
 };

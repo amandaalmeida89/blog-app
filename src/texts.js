@@ -15,5 +15,7 @@ export const texts = {
   uploadButtonLabel: 'Upload file',
   deleteSuccess: 'Post successfully deleted.',
   createSuccess: 'Post created successfully.',
-  updateSuccess: 'Post updated successfully.'
+  updateSuccess: 'Post updated successfully.',
+  searchPosts: 'Sorry, no posts found.',
+  triggerSnackBarLabel: 'UNDO SEARCH'
 };

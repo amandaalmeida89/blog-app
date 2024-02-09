@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation';
 import { useBlogContext } from '../../services/ContextProvider';
-import { PostResponse } from '../../types/Post';
+import { PostResponse } from '../../types/Blog';
 import { formattedDate } from '../../utils/formatter';
 import Stack from '@mui/material/Stack';
 import CardMedia from '@mui/material/CardMedia';

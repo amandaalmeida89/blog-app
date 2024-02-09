@@ -1,29 +1,38 @@
-import { useEffect, useState } from 'react';
 import { useBlogContext } from '../services/ContextProvider';
+import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 
 export default function SnackBarFeedback () {
-  const [open, setOpen] = useState(false);
-  const { feedback } = useBlogContext();
+  const { feedback, sendGlobalFeedback } = useBlogContext();
+  const { message, action, isOpen } = feedback || {};
+  const { label, trigger } = action || {};
+
+  const handleAction = () => {
+    if (trigger) {
+      sendGlobalFeedback({ message: '', isOpen: false });
+      trigger();
+    }
+  };
 
   const handleClose = (_: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
-    setOpen(false);
+    sendGlobalFeedback({ message: '', isOpen: false });
   };
 
-  useEffect(()=> {
-    if(feedback) {
-      setOpen(true);
-    }
-  }, [feedback]);
+  const actionButton = (
+    <Button color="primary" size="small" onClick={handleAction}>
+      {label || 'UNDO'}
+    </Button>
+  );
 
   return (
     <Snackbar
-      open={open}
-      autoHideDuration={5000}
-      message={feedback}
+      open={isOpen}
+      autoHideDuration={!trigger ? 5000 : null}
       onClose={handleClose}
+      message={message}
+      action={trigger ? actionButton : ''}
     />
 );}

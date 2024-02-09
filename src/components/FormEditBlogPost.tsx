@@ -10,7 +10,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { CustomAlert } from './CustomAlert';
-import { PostResponse } from '../types/Post';
+import { PostResponse } from '../types/Blog';
 import { texts } from '../texts';
 import { getBase64 } from '../utils/formatter';
 import styles from '../styles/FormEditBlogPost.module.css';

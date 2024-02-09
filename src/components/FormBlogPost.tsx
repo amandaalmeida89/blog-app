@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack';
 import Modal from '@mui/material/Modal';
 import { FormDeleteBlogPost } from './FormDeleteBlogPost';
 import { FormEditBlogPost } from './FormEditBlogPost';
-import { PostResponse } from '../types/Post';
+import { PostResponse } from '../types/Blog';
 
 type Props = {
   isEdit: boolean,
