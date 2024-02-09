@@ -96,12 +96,12 @@ export default function BlogList() {
     } else if (snackBarStatus) {
       return sendGlobalFeedback({ message: '', isOpen: false });
     }
-  }, [list.length, searchValue, snackBarStatus, sendGlobalFeedback]);
+  }, [list.length]);
 
   useEffect(() => {
     const list = getList(page, searchValue);
     setList(list);
-  },[page, debouncedValue, searchValue, getList]);
+  },[page, debouncedValue]);
 
   return (
     <Stack>
