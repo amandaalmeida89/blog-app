@@ -101,7 +101,7 @@ export default function BlogList() {
   useEffect(() => {
     const list = getList(page, searchValue);
     setList(list);
-  },[page, debouncedValue]);
+  },[page, debouncedValue, getList]);
 
   return (
     <Stack>
